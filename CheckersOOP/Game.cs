@@ -2,6 +2,6 @@
 {
     abstract public class Game
     {
-
+        
     }
 }

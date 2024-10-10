@@ -47,7 +47,7 @@ namespace CheckersOOP
             {
                 if(!Enum.IsDefined(typeof(MoveType), value))
                 {
-                    throw new ArgumentOutOfRangeException("Not a valid move type");
+                    throw new ArgumentOutOfRangeException($"{value} Not a valid move type");
                 }
 
                 MoveType = value;
