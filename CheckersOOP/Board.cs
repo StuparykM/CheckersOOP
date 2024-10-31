@@ -198,6 +198,7 @@ namespace CheckersOOP
             int targetCol;
             int captureRow;
             int captureCol;
+            
 
             if(PlayerTeam == null)
             {
@@ -237,10 +238,27 @@ namespace CheckersOOP
             #endregion
 
             #region Movement Logic
-            //target tile cannot be occupied unless it is also the capture tile
-            //the capture tile cannot be null 
-            //the origin tile and capture tile cannot be the same team unless friendly fire is activated
-            //origin tile cannot be null
+
+            if (Tiles[captureCol,captureRow] == null)
+            {
+                throw new ArgumentNullException("Capture invalid");
+            }
+
+            if (Tiles[originCol, originRow] == null)
+            {
+                throw new ArgumentNullException("Invalid start position");
+            }
+
+            if (Tiles[targetCol, targetRow] == null && !(targetCol == captureCol && targetRow == captureRow))
+            {
+                throw new InvalidOperationException("Capture invalid");
+            }
+
+            if (Tiles[originCol, originRow]?.Team == PlayerTeam && Tiles[captureCol, captureRow]?.Team == PlayerTeam && Tiles[captureCol, captureRow]?.FriendlyFire == false)
+            {
+                throw new InvalidOperationException("Capture Invalid");
+            }
+
             #endregion
 
             #region Movement
