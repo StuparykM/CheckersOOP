@@ -182,8 +182,8 @@ namespace CheckersOOP
             #endregion
 
             #region Movement
-            Tiles[originCol, originRow] = Tiles[targetCol, targetRow];
-            Tiles[originCol, originRow] = null;
+            Tiles[targetCol, targetRow] = Tiles[originCol, originRow];
+            Tiles[targetCol, targetRow] = null;
             #endregion
         }
 
@@ -259,10 +259,16 @@ namespace CheckersOOP
                 throw new InvalidOperationException("Capture Invalid");
             }
 
+
+
             #endregion
 
             #region Movement
             //Remove the capture tile move the origin to target tile unoccupy origin tile.
+            Tiles[targetCol, targetRow] = Tiles[originCol, originRow];
+            Tiles[targetCol, targetRow] = null;
+            Tiles[captureCol, captureRow] = null;
+
             #endregion
         }
 
