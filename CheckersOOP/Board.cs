@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -274,6 +276,83 @@ namespace CheckersOOP
 
         public abstract void SetUpPieces();
 
+        #endregion
+    }
+
+    public class StandardBoard : Board
+    {
+        #region Data Members
+        private const int _size = 8;
+        private const int _startingPieceRows = 3;
+
+
+        #endregion
+
+        #region Properties
+
+        private static int Size
+        {
+            get
+            {
+                return _size;
+            }
+        }
+
+        private static int StartingPosition
+        {
+            get
+            {
+                return _startingPieceRows;
+            }
+        }
+        #endregion
+
+        #region Constructor
+        public StandardBoard() : base(Size, Size) { }
+        #endregion
+
+        #region Override Method
+
+        public override void SetUpPieces()
+        {
+            ArgumentNullException.ThrowIfNull(Tiles, nameof(Tiles));
+
+            #region Enemy Color
+            ArgumentNullException.ThrowIfNull(PlayerTeam, nameof(PlayerTeam));
+
+            TeamColor enemyTeam;
+
+            if(PlayerTeam == TeamColor.Light)
+            {
+                enemyTeam = TeamColor.Dark;
+            }
+            else
+            {
+                enemyTeam = TeamColor.Light;
+            }
+
+            #endregion
+
+            #region Board Set Up
+            for(int row = 0; row < Height; row++)
+            {
+                for(int col = 0; col < Width; col++)
+                {
+                    //% of 2 remainder of one will place a tile on every second piece. If we were to increase both by 1 we are adding the number of empty spaces before placing a tile.
+                    if((row + col) % 2 == 1){
+                        if(row < StartingPosition)
+                        {
+                            Tiles[col, row] = new StandardPiece(enemyTeam);
+                        }
+                        else if (row >= Height - StartingPosition)
+                        {
+                            Tiles[col, row] = new StandardPiece((TeamColor)PlayerTeam);
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
         #endregion
     }
 }
