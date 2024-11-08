@@ -11,6 +11,7 @@ namespace CheckersOOP
         private TeamColor _playerTeam;
         private int _turnNumber;
         private Board _board;
+        private bool _mustCapture = false;
         #endregion
 
         //protected sets
@@ -189,17 +190,34 @@ namespace CheckersOOP
 
         public void PlayerTurn(Piece piece, Move move)
         {
+
             //TODO
             //check if the piece belongs to the correct team
 
+            
+
             //check if the piece has the move in it's list
 
-            //attempt the move through board and catch any problems
+            //Check if move is move or capture
+            //attempt the move/capture through board and catch any problems
             //if problems throw exception with userfriendly exception
+            //if it *was* a capture, return (turn is not over)
 
             //check gamestate is ongoing
-                //call next turn
-                //call CPU Turn
+            //call next turn
+            //call CPU Turn
+            if (State() == GameState.Ongoing)
+            {
+                NextTurn();
+                CPUTurn();
+            }
+            else
+            {
+                throw new Exception("Game Over");
+            }
+
+            //else
+            //inform game has ended
         }
 
         private void CPUTurn()
@@ -207,8 +225,14 @@ namespace CheckersOOP
             //TODO
             //Move dictated by AI you create here
 
-            //check game state is ongoing
-                //NextTurn()
+            if(State() == GameState.Ongoing)
+            {
+                NextTurn();
+            }
+            else
+            {
+                throw new Exception("Game Over");
+            }
         }
     }
 }
