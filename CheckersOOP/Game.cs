@@ -1,4 +1,5 @@
-﻿using System.Security.AccessControl;
+﻿using System.Data;
+using System.Security.AccessControl;
 using System.Security.Cryptography;
 
 namespace CheckersOOP
@@ -193,15 +194,32 @@ namespace CheckersOOP
 
             //TODO
             //check if the piece belongs to the correct team
-
+             if(piece.Team != PlayerTeam)
+             {
+                throw new Exception("Piece belongs to other team");
+             }
             
 
             //check if the piece has the move in it's list
-
-            //Check if move is move or capture
+            if(!piece.Moves.Contains(move))
+            {
+                throw new Exception("Invalid move");
+            }
+            
+            
             //attempt the move/capture through board and catch any problems
+            
+
             //if problems throw exception with userfriendly exception
             //if it *was* a capture, return (turn is not over)
+            if(move.MoveType == MoveType.Capture)
+            {
+                return;
+            }
+            else
+            {
+                NextTurn();
+            }
 
             //check gamestate is ongoing
             //call next turn
@@ -216,8 +234,6 @@ namespace CheckersOOP
                 throw new Exception("Game Over");
             }
 
-            //else
-            //inform game has ended
         }
 
         private void CPUTurn()
