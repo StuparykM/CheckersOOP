@@ -216,10 +216,6 @@ namespace CheckersOOP
             {
                 return;
             }
-            else
-            {
-                NextTurn();
-            }
 
             //check gamestate is ongoing
             //call next turn
